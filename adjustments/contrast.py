@@ -7,7 +7,7 @@ class Contrast:
 
     """
     Adjusts the contrast of an image.
-    Contrast is modified by scaling pixel values relative to the midpoint (0.5).
+    Contrast is modified by scaling pixel values relative to the midpoint (which is 0.5).
     - A value > 1.0 increases contrast
     - A value < 1.0 decreases contrast
     - A value of 1.0 leaves the image unchanged

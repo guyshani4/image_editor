@@ -30,6 +30,9 @@ def parse_config(path):
 
 
 class ImageEditor:
+    """
+        Loads an image and applies a series of operations specified in a config.
+    """
     def __init__(self, config):
         self.image = iio.imread(config['input']).astype(np.float32) / 255.0
         self.operations = config.get('operations', [])
@@ -37,8 +40,12 @@ class ImageEditor:
         self.display = config.get('display', False)
 
     def apply_operations(self):
+        """
+            Applies all operations in sequence from the config.
+        """
         for op in self.operations:
             op_type = op['type']
+            print(f"🔧 Applying {op_type}...")
 
             if op_type == 'box':
                 self.image = BoxBlur(op['width'], op['height']).apply(self.image)

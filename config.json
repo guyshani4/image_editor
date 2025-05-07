@@ -1,0 +1,13 @@
+{
+  "input": "images/sample.png",
+  "output": "images/output.jpg",
+  "display": true,
+  "operations": [
+    { "type": "box", "width": 3, "height": 3 },
+    { "type": "sobel" },
+    { "type": "sharpen", "alpha": 1.0 },
+    { "type": "brightness", "value": 1.2 },
+    { "type": "contrast", "value": 1.1 },
+    { "type": "saturation", "value": 1.3 }
+  ]
+}

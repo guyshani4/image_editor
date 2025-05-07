@@ -22,7 +22,7 @@ def parse_config(path):
     # Validation
     if 'input' not in config:
         raise ValueError("Missing 'input' field in config.")
-
+    # Not sure if to delete it
     if not config.get('output') and not config.get('display', False):
         raise ValueError("You must provide either an 'output' path or set 'display' to true.")
 
@@ -65,6 +65,9 @@ class ImageEditor:
     def run(self):
         self.apply_operations()
         result = (np.clip(self.image, 0, 1) * 255).astype(np.uint8)
+
+        if result.ndim == 3 and result.shape[2] == 4:
+            result = result[:, :, :3]
 
         if self.output:
             iio.imwrite(self.output, result)

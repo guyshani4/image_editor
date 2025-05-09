@@ -24,7 +24,7 @@ logging.basicConfig(
 
 def prepare_output_path(path, prefix="image", ext="png"):
     """
-    Handles output path logic:
+    Handles output path:
     - If it's a directory (or no extension), ensure it exists and generate a unique filename inside.
     - If it's a file and exists, add suffix (_1, _2, ...) until available.
     - Returns a full valid output file path.
@@ -57,6 +57,11 @@ def prepare_output_path(path, prefix="image", ext="png"):
         return new_path
 
 def parse_config(path):
+    """
+    - Loads and validates a JSON configuration file.
+    - Ensures required fields ('input', and 'output' or 'display') exist.
+    - Returns the config dictionary if valid, otherwise None.
+    """
     try:
         with open(path, 'r') as f:
             config = json.load(f)
@@ -78,7 +83,15 @@ def parse_config(path):
     return config
 
 class ImageEditor:
+    """
+    - Loads an image and applies operations specified in a json file.
+    - Supports saving and/or displaying the final result.
+    """
     def __init__(self, config):
+        """
+        - Initializes the editor with config values.
+        - Loads the input image and stores output/display preferences.
+        """
         try:
             self.image = iio.imread(config['input']).astype(np.float32) / 255.0
         except Exception as e:
@@ -91,6 +104,10 @@ class ImageEditor:
         self.display = config.get('display', False)
 
     def apply_operations(self):
+        """
+        - Applies a sequence of image processing operations.
+        - Logs and continues past unsupported or failed operations.
+        """
         for op in self.operations:
             try:
                 op_type = op['type']
@@ -116,6 +133,12 @@ class ImageEditor:
                 logging.error(f"Operation failed: {op}, Error: {e}")
 
     def run(self):
+        """
+        Executes the full image editing:
+        1. Applies operations.
+        2. Converts image back to original form.
+        3. Saves and/or displays the result.
+        """
         self.apply_operations()
         result = (np.clip(self.image, 0, 1) * 255).astype(np.uint8)
 

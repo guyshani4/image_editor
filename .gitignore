@@ -1,2 +1,35 @@
-# created by virtualenv automatically
-.venv/bin
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# PyCharm project files
+.idea/
+
+# Jupyter Notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Image outputs
+*.png
+*.jpg
+*.jpeg
+
+# Ignore test outputs if you have a test directory
+tests/__pycache__/

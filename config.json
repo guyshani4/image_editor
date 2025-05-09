@@ -6,7 +6,7 @@
     { "type": "sharpen",
       "alpha": 1.7
     },
-    { "type": "box",
+    { "type": "blur",
       "height": 3,
       "width": 3
     },
@@ -18,3 +18,4 @@
     }
   ]
 }
+

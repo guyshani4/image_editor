@@ -47,7 +47,7 @@ class ImageEditor:
             op_type = op['type']
             print(f"🔧 Applying {op_type}...")
 
-            if op_type == 'box':
+            if op_type == 'blur':
                 self.image = BoxBlur(op['width'], op['height']).apply(self.image)
             elif op_type == 'sobel':
                 self.image = Sobel().apply(self.image)

@@ -144,6 +144,7 @@ if __name__ == '__main__':
     print("    • 'display': true/false\n")
 
 
+
     while True:
         config_path = input("Enter path to config JSON file: ").strip()
         config = parse_config(config_path)

@@ -1,13 +1,20 @@
 {
-  "input": "images/sample.png",
+  "input": "images/sample.jpg",
   "output": "images/output.jpg",
   "display": true,
   "operations": [
-    { "type": "box", "width": 3, "height": 3 },
-    { "type": "sobel" },
-    { "type": "sharpen", "alpha": 1.0 },
-    { "type": "brightness", "value": 1.2 },
-    { "type": "contrast", "value": 1.1 },
-    { "type": "saturation", "value": 1.3 }
+    { "type": "sharpen",
+      "alpha": 1.7
+    },
+    { "type": "box",
+      "height": 3,
+      "width": 3
+    },
+    { "type": "brightness",
+      "value": 0.3
+    },
+    { "type": "contrast",
+      "value": 1.3
+    }
   ]
 }

@@ -57,7 +57,7 @@ class BoxBlur:
 
     def apply(self, image: np.ndarray) -> np.ndarray:
         if image.ndim == 2:
-            image = image[:, :, np.newaxis]  # convert grayscale to 3D
+            image = image[:, :, np.newaxis]  # convert a black and white image to 3 dimensions image (colorful)
 
         H, W, C = image.shape
         pad_h = self.height // 2

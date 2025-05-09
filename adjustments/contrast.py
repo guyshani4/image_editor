@@ -1,9 +1,8 @@
 import numpy as np
 
-
 class Contrast:
     def __init__(self, value: float):
-        self.value = value  # Contrast factor, e.g., 1.0 = no change, 1.5 = increase, 0.8 = decrease
+        self.value = value  # Contrast factor: 1.0 = no change, 1.5 = increase, 0.8 = decrease
 
     def apply(self, image):
         """

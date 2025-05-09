@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class Saturation:
     def __init__(self, value: float):
         self.value = value
@@ -18,10 +17,10 @@ class Saturation:
             # For grayscale, saturation does nothing
             return image
 
-        # Convert to grayscale using luminosity method
+        # Convert to grayscale using technique called Luminosity method
         gray = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])[..., np.newaxis]
 
-        # Interpolate between grayscale and original image
+        # merge between grayscale and original image
         adjusted = gray * (1 - self.value) + image * self.value
         adjusted = np.clip(adjusted, 0, 1)
         return adjusted

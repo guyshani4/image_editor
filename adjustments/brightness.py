@@ -2,7 +2,7 @@ import numpy as np
 
 class Brightness:
     def __init__(self, value):
-        self.value = value  # Brightness scale factor (e.g. 1.2 = 20% brighter)
+        self.value = value  # Brightness scale factor: 1.2 = 20% brighter, 0.8 = decrease
 
     def apply(self, image):
         """
@@ -12,6 +12,6 @@ class Brightness:
             - A value < 1.0 makes the image darker
             - A value of 1.0 leaves the image unchanged
         """
-        adjusted = image * self.value  # Scale brightness
+        adjusted = image * self.value
         adjusted = np.clip(adjusted, 0, 1)  # Ensure values remain valid
         return adjusted

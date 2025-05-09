@@ -1,7 +1,7 @@
 {
   "input": "images/sample.jpg",
-  "output": "images/output.jpg",
-  "display": true,
+  "output": "images/output.png",
+  "display": false,
   "operations": [
     { "type": "sharpen",
       "alpha": 1.7
@@ -17,5 +17,6 @@
       "value": 1.3
     }
   ]
+
 }
 

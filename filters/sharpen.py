@@ -8,7 +8,7 @@ class Sharpen:
     def __init__(self, alpha: float):
         self.alpha = alpha
         # Prompt: For implementing an un-sharp mask in image processing using NumPy,
-        # what's a good way to define a uniform blur kernel?
+        # what's a good way to define a blur kernel?
         # Is it better to use np.ones((5,5)) or create a Gaussian kernel manually?
         self.kernel = np.ones((5, 5), dtype=np.float32) / 25.0
 

@@ -1,18 +1,8 @@
-import argparse
 import json
 import os
 import logging
-import numpy as np
-import imageio.v3 as iio
-import matplotlib.pyplot as plt
 import time
-
-from filters.box_blur import BoxBlur
-from filters.sobel import Sobel
-from filters.sharpen import Sharpen
-from adjustments.brightness import Brightness
-from adjustments.contrast import Contrast
-from adjustments.saturation import Saturation
+import imageEditor
 
 # Logging setup
 os.makedirs("logs", exist_ok=True)
@@ -22,7 +12,7 @@ logging.basicConfig(
     format='%(asctime)s - %(message)s'
 )
 
-def prepare_output_path(path, prefix="image", ext="png"):
+def initialize_output_path(path, prefix="image", ext="png"):
     """
     Handles output path:
     - If it's a directory (or no extension), ensure it exists and generate a unique filename inside.
@@ -82,82 +72,6 @@ def parse_config(path):
 
     return config
 
-class ImageEditor:
-    """
-    - Loads an image and applies operations specified in a json file.
-    - Supports saving and/or displaying the final result.
-    """
-    def __init__(self, config):
-        """
-        - Initializes the editor with config values.
-        - Loads the input image and stores output/display preferences.
-        """
-        try:
-            self.image = iio.imread(config['input']).astype(np.float32) / 255.0
-        except Exception as e:
-            print(f"❌ Failed to load input image: {e}")
-            logging.error(f"Image load failed: {e}")
-            raise
-
-        self.operations = config.get('operations', [])
-        self.output = config.get('output')
-        self.display = config.get('display', False)
-
-    def apply_operations(self):
-        """
-        - Applies a sequence of image processing operations.
-        - Logs and continues past unsupported or failed operations.
-        """
-        for op in self.operations:
-            try:
-                op_type = op['type']
-                print(f"🔧 Applying {op_type}...")
-
-                if op_type == 'blur':
-                    self.image = BoxBlur(op['width'], op['height']).apply(self.image)
-                elif op_type == 'sobel':
-                    self.image = Sobel().apply(self.image)
-                elif op_type == 'sharpen':
-                    self.image = Sharpen(op['alpha']).apply(self.image)
-                elif op_type == 'brightness':
-                    self.image = Brightness(op['value']).apply(self.image)
-                elif op_type == 'contrast':
-                    self.image = Contrast(op['value']).apply(self.image)
-                elif op_type == 'saturation':
-                    self.image = Saturation(op['value']).apply(self.image)
-                else:
-                    print(f"⚠️ Unsupported operation: {op_type}")
-                    logging.warning(f"Unsupported operation: {op_type}")
-            except Exception as e:
-                print(f"❌ Failed operation '{op}': {e}")
-                logging.error(f"Operation failed: {op}, Error: {e}")
-
-    def run(self):
-        """
-        Executes the full image editing:
-        1. Applies operations.
-        2. Converts image back to original form.
-        3. Saves and/or displays the result.
-        """
-        self.apply_operations()
-        result = (np.clip(self.image, 0, 1) * 255).astype(np.uint8)
-
-        if result.ndim == 3 and result.shape[2] == 4:
-            result = result[:, :, :3]
-
-        if self.output:
-            self.output = prepare_output_path(self.output)
-
-            try:
-                iio.imwrite(self.output, result)
-            except Exception as e:
-                print(f"❌ Failed to save output image: {e}")
-                logging.error(f"Save failed: {e}")
-
-        if self.display:
-            plt.imshow(result)
-            plt.axis('off')
-            plt.show()
 
 if __name__ == '__main__':
     print("📄 Please provide a config JSON file with:")
@@ -171,7 +85,7 @@ if __name__ == '__main__':
         config = parse_config(config_path)
         if config:
             try:
-                editor = ImageEditor(config)
+                editor = imageEditor.ImageEditor(config)
                 editor.run()
             except Exception as e:
                 print("⚠️ Could not complete image editing. Check logs.")

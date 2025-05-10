@@ -90,8 +90,6 @@ if __name__ == '__main__':
                 config['display'] = True
                 config['output'] = None
             elif choice == 'save':
-                output_path = input("Enter output file path or directory: ").strip()
-                config['output'] = output_path
                 config['display'] = False
             else:
                 print("❌ Invalid choice. Please type 'display' or 'save'.")

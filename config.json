@@ -11,13 +11,10 @@
       "width": 3
     },
     { "type": "brightness",
-      "value": 0.3
+      "value": 0.8
     },
     { "type": "contrast",
       "value": 1.3
-    },
-    {
-      "type": "sobel"
     }
   ]
 

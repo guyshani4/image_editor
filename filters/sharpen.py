@@ -13,7 +13,7 @@ class Sharpen:
     def __init__(self, alpha: float):
         self.alpha = alpha
         # Use a basic 3x3 box blur kernel for smoothing
-        self.kernel = np.ones((3, 3), dtype=np.float32) / 9.0
+        self.kernel = np.ones((5, 5), dtype=np.float32) / 25.0
 
     def apply(self, image: np.ndarray) -> np.ndarray:
         """
@@ -33,14 +33,15 @@ class Sharpen:
             image = image[:, :, np.newaxis]  # convert black and white (grayscale - 2D) to 3D
 
         H, W, C = image.shape
-        padded = np.pad(image, ((1, 1), (1, 1), (0, 0)), mode='edge')
-        blurred = np.zeros_like(image)
 
         # Box blur convolution
-        for dy in range(3):
-            for dx in range(3):
-                blurred += padded[dy:dy+H, dx:dx+W, :]
-        blurred /= 9.0
+        padded = np.pad(image, ((2, 2), (2, 2), (0, 0)), mode='edge')
+        blurred = np.zeros_like(image)
+
+        for dy in range(5):
+            for dx in range(5):
+                blurred += padded[dy:dy + H, dx:dx + W, :]
+        blurred /= 25.0
 
         # technique that called Un-sharp mask: original + alpha * (original - blurred)
         sharpened = image + self.alpha * (image - blurred)

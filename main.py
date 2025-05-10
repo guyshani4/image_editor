@@ -84,6 +84,19 @@ if __name__ == '__main__':
         config_path = input("Enter path to config JSON file: ").strip()
         config = parse_config(config_path)
         if config:
+            # Ask user whether to display or save result
+            choice = input("Do you want to display the result or save it to a file? (display/save): ").strip().lower()
+            if choice == 'display':
+                config['display'] = True
+                config['output'] = None
+            elif choice == 'save':
+                output_path = input("Enter output file path or directory: ").strip()
+                config['output'] = output_path
+                config['display'] = False
+            else:
+                print("❌ Invalid choice. Please type 'display' or 'save'.")
+                continue
+        if config:
             try:
                 editor = imageEditor.ImageEditor(config)
                 editor.run()

@@ -13,5 +13,7 @@ class Brightness:
             - A value of 1.0 leaves the image unchanged
         """
         adjusted = image * self.value
-        adjusted = np.clip(adjusted, 0, 1)  # Ensure values remain valid
+        # Prompt: How do I clip a NumPy array to the range [0, 1]
+        # to make sure image values stay valid for display or saving?
+        adjusted = np.clip(adjusted, 0, 1)
         return adjusted

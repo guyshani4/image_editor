@@ -14,5 +14,7 @@ class Contrast:
         """
         midpoint = 0.5
         adjusted = (image - midpoint) * self.value + midpoint
+        # Prompt: How do I clip a NumPy array to the range [0, 1]
+        # to make sure image values stay valid for display or saving?
         adjusted = np.clip(adjusted, 0, 1)
         return adjusted

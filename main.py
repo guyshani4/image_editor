@@ -5,6 +5,8 @@ import time
 import imageEditor
 
 # Logging setup
+# Prompt: How do I set up a logging system in Python that logs errors to a file,
+# and ensure the log directory is created if it doesn't exist?
 os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
     filename='logs/errors.log',
@@ -25,6 +27,7 @@ def initialize_output_path(path, prefix="image", ext="png"):
     base, extension = os.path.splitext(path)
     if not extension or path.endswith('/'):
         # Treat as directory
+        # How do I generate a unique filename with a timestamp and join it to a directory path in Python?
         if not os.path.exists(path):
             create = input(f"❌ Output directory '{path}' does not exist. Create it? [y/n]: ").strip().lower()
             if create == 'y':
@@ -55,7 +58,10 @@ def parse_config(path):
     try:
         with open(path, 'r') as f:
             config = json.load(f)
+    # Prompt: are there any more relevant errors can occur when trying
+    # to get a "config.json" file in a path from the user?
     except FileNotFoundError:
+        # Prompt: same as in ImageEditor class.
         print(f"❌ File '{path}' not found. Please try again.")
         return None
     except json.JSONDecodeError:

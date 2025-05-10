@@ -25,6 +25,8 @@ class ImageEditor:
         - Loads the input image and stores output/display preferences.
         """
         try:
+            # prompt: How do I read an image in Python and convert it
+            # to a normalized NumPy array with float32 values between 0 and 1?
             self.image = iio.imread(config['input']).astype(np.float32) / 255.0
         except Exception as e:
             print(f"❌ Failed to load input image: {e}")
@@ -50,6 +52,8 @@ class ImageEditor:
 
         Unsupported or failed operations are logged and skipped.
         """
+        # Prompt: change all those if-else operations to a basic lambda-based OPERATIONS map
+
         OPERATIONS = {
             'blur': lambda args: BoxBlur(args['width'], args['height']),
             'sobel': lambda args: Sobel(),
@@ -66,6 +70,9 @@ class ImageEditor:
                 operation = OPERATIONS[operation_type](op)
                 self.image = operation.apply(self.image)
             except KeyError as ke:
+                # Prompt: Make a pattern to print and logging.error statements consistent, user-friendly,
+                # and clearly formatted using emojis like ✅ and ❌.
+                # Each message should include the variable context (like operation name or path).
                 print(f"❌ Missing parameter for '{operation_type}': {ke}")
                 logging.error(f"Missing parameter for '{operation_type}': {ke}")
             except Exception as e:
@@ -101,6 +108,7 @@ class ImageEditor:
                 logging.error(f"Save failed: {e}")
 
         if self.display:
+            # Prompt: How do I display an image using matplotlib in Python without axis problems or borders?
             plt.imshow(final_image)
             plt.axis('off')
             plt.show()

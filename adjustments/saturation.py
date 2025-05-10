@@ -22,5 +22,7 @@ class Saturation:
 
         # merge between grayscale and original image
         adjusted = gray * (1 - self.value) + image * self.value
+        # Prompt: How do I clip a NumPy array to the range [0, 1]
+        # to make sure image values stay valid for display or saving?
         adjusted = np.clip(adjusted, 0, 1)
         return adjusted

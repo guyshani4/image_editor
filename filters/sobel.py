@@ -6,7 +6,7 @@ class Sobel:
     It highlights areas of high spatial gradient (edges).
     """
     def __init__(self):
-        # Standard Sobel kernels for horizontal and vertical edges
+        # Standard Sobel kernels for horizontal and vertical edges.
         self.kernel_x = np.array([[-1, 0, 1],
                                   [-2, 0, 2],
                                   [-1, 0, 1]], dtype=np.float32)
@@ -16,10 +16,17 @@ class Sobel:
                                   [ 1,  2,  1]], dtype=np.float32)
 
     def apply(self, image: np.ndarray) -> np.ndarray:
+        """
+            Apply Sobel edge detection to an image.
+            This function calculates the gradient magnitude at each pixel using the Sobel filter,
+            which highlights edges by computing horizontal and vertical intensity changes.
+            It operates independently on each channel (e.g., R/G/B), and supports grayscale input.
+        """
         if image.ndim == 2:
             image = image[:, :, np.newaxis]  # convert black and white (grayscale - 2D) to 3D
 
         H, W, C = image.shape
+        # Prompt: same for BoxBlur padding use.
         padded = np.pad(image, ((1, 1), (1, 1), (0, 0)), mode='edge')
         gradient = np.zeros_like(image)
 

@@ -1,5 +1,8 @@
 import numpy as np
 
+from filters.box_blur import BoxBlur
+
+
 class Sharpen:
     """
     Sharpens an image by enhancing the difference between the original image
@@ -11,6 +14,7 @@ class Sharpen:
         # what's a good way to define a blur kernel?
         # Is it better to use np.ones((5,5)) or create a Gaussian kernel manually?
         self.kernel = np.ones((5, 5), dtype=np.float32) / 25.0
+        self.blur = BoxBlur(5, 5)
 
     def apply(self, image: np.ndarray) -> np.ndarray:
         """
@@ -21,20 +25,8 @@ class Sharpen:
         if image.ndim == 2:
             image = image[:, :, np.newaxis]  # convert black and white (grayscale - 2D) to 3D
 
-        H, W, C = image.shape
-
         # Box blur convolution
-        # Prompt: same for BoxBlur padding use.
-        padded = np.pad(image, ((2, 2), (2, 2), (0, 0)), mode='edge')
-        blurred = np.zeros_like(image)
-
-        for dy in range(5):
-            for dx in range(5):
-                # Prompt: When implementing a box blur using NumPy, is it efficient and accurate to sum over
-                # shifted regions using slicing like padded[dy:dy+H, dx:dx+W, :]?
-                # Are there more optimized alternatives for applying a uniform blur filter?
-                blurred += padded[dy:dy + H, dx:dx + W, :]
-        blurred /= 25.0
+        blurred = self.blur.apply(image)
 
         # technique that called Un-sharp mask: original + alpha * (original - blurred)
         sharpened = image + self.alpha * (image - blurred)

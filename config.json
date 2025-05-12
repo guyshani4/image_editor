@@ -4,17 +4,17 @@
   "display": false,
   "operations": [
     { "type": "sharpen",
-      "alpha": 1.7
+      "alpha": 4
     },
     { "type": "blur",
       "height": 3,
       "width": 3
     },
     { "type": "brightness",
-      "value": 0.8
+      "value": 1
     },
     { "type": "contrast",
-      "value": 1.3
+      "value": 1
     }
   ]
 
